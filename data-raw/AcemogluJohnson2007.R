@@ -11,14 +11,14 @@ library(data.table)
 
 #### Download the data and unzip
 # This probably has to be done by hand since it needs journal access
-dir.create(here::here("data/AcemogluJohnson2007"), recursive = TRUE)
+dir.create(here::here("data-raw/AcemogluJohnson2007"), recursive = TRUE)
 url <- "https://www.journals.uchicago.edu/doi/suppl/10.1086/529000/suppl_file/32236data.zip"
-download.file(url, destfile = here::here("data/AcemogluJohnson2007/32236data.zip"))
+download.file(url, destfile = here::here("data-raw/AcemogluJohnson2007/32236data.zip"))
 
-unzip(here::here("data/AcemogluJohnson2007/32236data.zip"), exdir = here::here("data/AcemogluJohnson2007"))
+unzip(here::here("data-raw/AcemogluJohnson2007/32236data.zip"), exdir = here::here("data-raw/AcemogluJohnson2007"))
 
 #### Read and process into first differences
-aj <- haven::read_dta(here::here("data/AcemogluJohnson2007/MASTERSETFORREGRESSIONS.dta")) %>%
+aj <- haven::read_dta(here::here("data-raw/AcemogluJohnson2007/MASTERSETFORREGRESSIONS.dta")) %>%
   data.table()
 
 aj2 <- na.omit(aj[sjbasesamplenoncomm == 1 & (sample40 == 1 & sample80 == 1) & year %in% c(1940, 1980), .(
@@ -46,3 +46,10 @@ stopifnot((coef(lm2)[3] - -1.589)^2 < 1e-6)
 #### Save dataset
 AcemogluJohnson2007 <- ajfd
 usethis::use_data(AcemogluJohnson2007, overwrite = TRUE)
+
+#### Remove the original data files
+raw_files <- list.files(path = here::here("data-raw/AcemogluJohnson2007"),
+                        full.names = TRUE)
+file.remove(raw_files)
+file.remove(here::here("data-raw/AcemogluJohnson2007"))
+

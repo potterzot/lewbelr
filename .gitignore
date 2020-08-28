@@ -4,6 +4,6 @@
 
 
 # Don't include the Acemoglu and Johnson (2007) data
-/data/AcemogluJohnson2007.dta
+/data/AcemogluJohnson2007.rda
 
 
