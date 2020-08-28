@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+
+
+# Don't include the Acemoglu and Johnson (2007) data
+/data/AcemogluJohnson2007.dta
+
+
