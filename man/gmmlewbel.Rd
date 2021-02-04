@@ -5,14 +5,28 @@
 \title{GMM estimator of structural equations under heteroskedastic or non-normal
 errors.}
 \usage{
-gmmlewbel(formula, data, init = NULL)
+gmmlewbel(
+  formula,
+  data,
+  init = NULL,
+  error_type = c("hetero", "nonnormal"),
+  is_simultaneous = FALSE,
+  use_overid = FALSE
+)
 }
 \arguments{
-\item{formula}{a multipart formula like y2 ~ x1 + x2 | y1 | z. See details.}
+\item{formula}{a multipart formula like y1 | y2 ~ x1 + x2 | z. See Details
+for more information.}
 
 \item{data}{a data.frame or object convertable to a matrix.}
 
 \item{init}{a vector of initial parameters. Estimated by OLS if not provided.}
+
+\item{error_type}{Are errors heteroskedastic or non-normal? This determines
+the method used.}
+
+\item{overid}{should additional moments be used? Ignored if error_type is not
+"nonnormal".}
 }
 \value{
 a gmm object.
